@@ -1,11 +1,9 @@
-"""
-SCRAPE DATA FEED TO ANALYZER
-"""
 import json
 import requests
 import time
 import random
 import re
+
 WEBHOOK_URL = "https://discord.com/api/webhooks/1318701551958626397/qpwIDxYhowPW3pyK8j65gZIac9yuYQRQSlTry4oehq51hZF_lJuRxca0taAaiLGY9-D3"
 ERROR_WEBHOOK_URL = "https://discord.com/api/webhooks/1318705849169874984/fZukKBD0Mo4dttlmfEi7VtzQAjHVK2HtXib1Cl0reUCMtIb1UpqBtvE1CzEHkq0iymX2"
 
@@ -35,7 +33,6 @@ def run_scrape():
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
         "Accept-Language": "en-US,en;q=0.9",
-        # "Accept-Encoding":"gzip, deflate, br",
         "Referer": "https://www.walmart.ca/search?q=pokemon",
         "Sec-Ch-Ua": "\"Not.A/Brand\";v=\"99\", \"Google Chrome\";v=\"115\", \"Chromium\";v=\"115\"",
         "Sec-Ch-Ua-Mobile": "?0",
@@ -51,7 +48,7 @@ def run_scrape():
 
     print("\nProxy Test:", response.text)
 
-    print("\n-Session Initialized-\n")
+    print("\n-Session Initialized-")
 
     print("\n================================")
     print(f"SCRAPING LINKS")
@@ -110,6 +107,8 @@ def run_scrape():
                 requests.post(ERROR_WEBHOOK_URL, json={"content": "SCRIPT TERMINATED (FAILED TO SEND NOTIFICATION)"})
                 exit()
 
+    data["last_updated"] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+
     with open('data.json', "w") as f:
         json.dump(data, f, indent=2)
     print(f"\n-Updated 'data.json'-")
@@ -122,4 +121,3 @@ if __name__ == "__main__":
         sleep_duration = random.uniform(5*60, 15*60)
         print(f"\nSleeping for {sleep_duration/60:.2f} minutes...\n")
         time.sleep(sleep_duration)
-
