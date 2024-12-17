@@ -95,7 +95,7 @@ def run_scrape():
             message = None
             print("NO PRICE CHANGE")
         else:
-            message = f"PRICE CHANGE DETECTED FOR {url}: OLD PRICE {old_data[url]} -> NEW PRICE {data[url]}"
+            message = f"!!!PRICE CHANGE DETECTED!!!\n\n  OLD PRICE {old_data[url]} -> NEW PRICE {data[url]}\n\n  PRODUCT: {url}"
             print(message)
 
         if message:
@@ -119,5 +119,5 @@ if __name__ == "__main__":
     while True:
         run_scrape()
         sleep_duration = random.uniform(5*60, 15*60)
-        print(f"\nSleeping for {sleep_duration/60:.2f} minutes...\n")
+        print(f"\n-\nSleeping for {sleep_duration/60:.2f} minutes...\n-\n")
         time.sleep(sleep_duration)
