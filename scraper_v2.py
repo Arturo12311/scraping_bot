@@ -134,8 +134,12 @@ def run_scrape():
                         message = (f"!!!STOCK CHANGE DETECTED!!!\n\n  OUT OF STOCK\n\n  PRODUCT: {url}")
                     print(message)
 
-        if message and webhook_url:
-            send_notification(webhook_url, message)
+        if 'Sold and shipped by Walmart' in response.text:
+            print("WALMART PRODUCT")
+            if message and webhook_url and float(data[url]) < float(old_price):
+                send_notification(webhook_url, message)
+        else:
+            print("THIRD PARTY SELLER")
 
     data["last_updated"] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     save_json('data.json', data)
